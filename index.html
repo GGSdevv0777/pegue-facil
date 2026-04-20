@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pegue Fácil | O seu site de compras e vendas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="location-container">
+            <button id="btnLocation" class="btn-location" onclick="pegarLocalizacao()">
+                📍 Permitir localização
+            </button>
+        </div>
+        <div class="top-bar container">
+            <a href="#" class="logo">Pegue Fácil</a>
+            <div class="search-container">
+                <input type="text" placeholder="Estou buscando por...">
+                <button type="button">Buscar</button>
+            </div>
+            <div class="user-spacer"></div> 
+        </div>
+
+        <nav class="main-nav container">
+            <ul>
+                <li class="dropdown">
+                    <a href="#">Categorias ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Eletrônicos e Celulares</a></li>
+                        <li><a href="#">Veículos e Peças</a></li>
+                        <li><a href="#">Imóveis</a></li>
+                        <li><a href="#">Casa e Móveis</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Ofertas</a></li>
+                <li><a href="#">Cupons</a></li>
+                <li><a href="#">Supermercado</a></li>
+                <li><a href="#">Moda</a></li>
+                <li><a href="#" class="btn-sell">Vender</a></li>
+                <li><a href="#">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="products-section">
+            <h2 class="section-title">Recomendações baseadas na sua navegação</h2>
+            <div class="product-grid" id="product-grid"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2026 Pegue Fácil. Todos os direitos reservados.</p>
+            <p>A plataforma mais rápida para pegar e desapegar.</p>
+        </div>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+    <script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyCM8xPGDio2udbf7qJO3j4t-uOE4jCMjLc",
+        authDomain: "pegue-facil.firebaseapp.com",
+        // ADICIONE O LINK QUE VOCÊ ME MANDOU AQUI ABAIXO:
+        databaseURL: "https://pegue-facil-default-rtdb.firebaseio.com/",
+        projectId: "pegue-facil",
+        storageBucket: "pegue-facil.firebasestorage.app",
+        messagingSenderId: "891744879962",
+        appId: "1:891744879962:web:7d772c485b0866f42a9f63",
+        measurementId: "G-N263N9656Y"
+    };
+
+    // Inicializa o Firebase
+    firebase.initializeApp(firebaseConfig);
+    
+    // ATENÇÃO: Mudamos de firebase.firestore() para firebase.database()
+    const db = firebase.database();
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
