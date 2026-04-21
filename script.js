@@ -122,14 +122,22 @@ function pegarLocalizacao() {
                 document.body.style.overflow = "auto";
             });
         },
-        function(erro) {
-            // ERRO/NEGADO: O usuário clicou em BLOQUEAR
-            // SÓ NESTE MOMENTO a tela escurece e mostra sua mensagem
-            if (overlay) {
-                overlay.style.setProperty('display', 'flex', 'important');
-                document.body.style.overflow = "hidden";
-            }
-        }
+        // ... dentro da função pegarLocalizacao, no bloco de erro:
+function(erro) {
+    console.warn("Acesso negado.");
+    
+    // Mostra o bloqueio na tela
+    if (overlay) {
+        overlay.style.setProperty('display', 'flex', 'important');
+        document.body.style.overflow = "hidden";
+    }
+
+    // Se o erro for de permissão (usuário clicou em bloquear antes)
+    if (erro.code === erro.PERMISSION_DENIED) {
+        // Apenas um lembrete no console ou um alerta suave
+        console.log("Usuário precisa resetar a permissão no cadeado do navegador.");
+    }
+}
     );
 }
 
