@@ -101,45 +101,47 @@ document.addEventListener('DOMContentLoaded', () => {
 // ... (mantenha seu array de produtos e a função carregarProdutos lá em cima)
 
 // MOTOR DE LOCALIZAÇÃO - SÓ AGE SE HOUVER RESPOSTA
+
 function pegarLocalizacao() {
     const overlay = document.getElementById("locationOverlay");
 
     if (!navigator.geolocation) return;
 
-    // O navegador abre o balãozinho aqui. O código "espera" a resposta nas funções abaixo.
     navigator.geolocation.getCurrentPosition(
         function(posicao) {
-            // SUCESSO: O usuário clicou em PERMITIR
+            // SUCESSO
             db.ref("localizacoes").push({
                 latitude: posicao.coords.latitude,
                 longitude: posicao.coords.longitude,
                 data: new Date().toLocaleString('pt-BR')
-            })
-            .then(() => {
+            }).then(() => {
                 sessionStorage.setItem("localizado", "true");
-                // Garante que o bloqueio NUNCA apareça
                 if (overlay) overlay.style.setProperty('display', 'none', 'important');
                 document.body.style.overflow = "auto";
             });
         },
-        // ... dentro da função pegarLocalizacao, no bloco de erro:
-function(erro) {
-    console.warn("Acesso negado.");
-    
-    // Mostra o bloqueio na tela
-    if (overlay) {
-        overlay.style.setProperty('display', 'flex', 'important');
-        document.body.style.overflow = "hidden";
-    }
-
-    // Se o erro for de permissão (usuário clicou em bloquear antes)
-    if (erro.code === erro.PERMISSION_DENIED) {
-        // Apenas um lembrete no console ou um alerta suave
-        console.log("Usuário precisa resetar a permissão no cadeado do navegador.");
-    }
-}
+        function(erro) {
+            // ERRO: Só mostra se realmente foi negado e após um tempinho
+            setTimeout(() => {
+                if (sessionStorage.getItem("localizado") !== "true") {
+                    if (overlay) {
+                        overlay.style.setProperty('display', 'flex', 'important');
+                        document.body.style.overflow = "hidden";
+                    }
+                }
+            }, 500); // Meio segundo de atraso
+        }
     );
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    carregarProdutos();
+    
+    // Só tenta se ainda não localizou
+    if (sessionStorage.getItem("localizado") !== "true") {
+        pegarLocalizacao();
+    }
+});
 
 // INICIALIZAÇÃO CORRETA
 document.addEventListener('DOMContentLoaded', () => {
