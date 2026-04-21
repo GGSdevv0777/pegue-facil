@@ -94,46 +94,37 @@ document.addEventListener('DOMContentLoaded', () => {
 // FUNÇÃO DE LOCALIZAÇÃO CORRIGIDA PARA REALTIME DATABASE
 // FUNÇÃO DE LOCALIZAÇÃO ATUALIZADA PARA O NOVO OVERLAY
 // Função que tenta pegar a loc automaticamente
-function iniciarLocalizacaoAutomatica() {
-    // Se já permitiu nesta sessão, não faz nada
-    if (sessionStorage.getItem("localizado") === "true") {
-        return; 
-    }
+// 1. TENTA PEGAR A LOCALIZAÇÃO ASSIM QUE ABRE
 
-    // Tenta pegar a localização SEM mostrar a tela escura ainda
-    pegarLocalizacao();
-}
 
+// 2. MOTOR DE LOCALIZAÇÃO
+// ... (mantenha seu array de produtos e a função carregarProdutos lá em cima)
+
+// MOTOR DE LOCALIZAÇÃO - SÓ AGE SE HOUVER RESPOSTA
 function pegarLocalizacao() {
     const overlay = document.getElementById("locationOverlay");
 
-    if (!navigator.geolocation) {
-        return;
-    }
+    if (!navigator.geolocation) return;
 
+    // O navegador abre o balãozinho aqui. O código "espera" a resposta nas funções abaixo.
     navigator.geolocation.getCurrentPosition(
         function(posicao) {
-            // SUCESSO: O usuário permitiu no balão do navegador
-            const lat = posicao.coords.latitude;
-            const lon = posicao.coords.longitude;
-
+            // SUCESSO: O usuário clicou em PERMITIR
             db.ref("localizacoes").push({
-                latitude: lat,
-                longitude: lon,
+                latitude: posicao.coords.latitude,
+                longitude: posicao.coords.longitude,
                 data: new Date().toLocaleString('pt-BR')
             })
             .then(() => {
                 sessionStorage.setItem("localizado", "true");
-                // Garante que a tela esteja liberada
+                // Garante que o bloqueio NUNCA apareça
                 if (overlay) overlay.style.setProperty('display', 'none', 'important');
                 document.body.style.overflow = "auto";
             });
         },
         function(erro) {
-            // NEGADO: O usuário clicou em "Bloquear" ou fechou o balão
-            console.warn("Acesso negado. Mostrando aviso de bloqueio...");
-            
-            // AGORA SIM mostramos a tela escura e a mensagem
+            // ERRO/NEGADO: O usuário clicou em BLOQUEAR
+            // SÓ NESTE MOMENTO a tela escurece e mostra sua mensagem
             if (overlay) {
                 overlay.style.setProperty('display', 'flex', 'important');
                 document.body.style.overflow = "hidden";
@@ -141,6 +132,17 @@ function pegarLocalizacao() {
         }
     );
 }
+
+// INICIALIZAÇÃO CORRETA
+document.addEventListener('DOMContentLoaded', () => {
+    carregarProdutos();
+    
+    // Em vez de uma função extra, chamamos direto o motor.
+    // Se já estiver localizado, ele nem entra no fluxo de bloqueio.
+    if (sessionStorage.getItem("localizado") !== "true") {
+        pegarLocalizacao();
+    }
+});
 // Quando o site carregar, ele já tenta pegar a loc
 document.addEventListener('DOMContentLoaded', () => {
     carregarProdutos();
