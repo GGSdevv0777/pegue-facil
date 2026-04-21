@@ -11,13 +11,22 @@
 <body>
 
     <header>
-        <div class="location-container">
-            <button id="btnLocation" class="btn-location" onclick="pegarLocalizacao()">
-                📍 Permitir localização
-            </button>
-        </div>
+        <div id="locationOverlay" class="location-overlay" style="display: none;">
+    <div class="location-modal">
+        <h3>Localização Necessária</h3>
+        <p>Para mostrar as ofertas na sua região, precisamos que você permita o acesso no seu navegador.</p>
+        
+        <button id="btnLocation" class="btn-location-new" onclick="pegarLocalizacao()">
+            Tentar Novamente
+        </button>
+    </div>
+</div>
+</div>
         <div class="top-bar container">
-            <a href="#" class="logo">Pegue Fácil</a>
+   <a href="#" class="logo">
+    <img src="https://github.com/GGSdevv0777/pegue-facil/blob/main/logo.png?raw=true" alt="Pegue Fácil Logo" class="logo-img">
+</a>
+            
             <div class="search-container">
                 <input type="text" placeholder="Estou buscando por...">
                 <button type="button">Buscar</button>
@@ -26,24 +35,16 @@
         </div>
 
         <nav class="main-nav container">
-            <ul>
-                <li class="dropdown">
-                    <a href="#">Categorias ▾</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Eletrônicos e Celulares</a></li>
-                        <li><a href="#">Veículos e Peças</a></li>
-                        <li><a href="#">Imóveis</a></li>
-                        <li><a href="#">Casa e Móveis</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Ofertas</a></li>
-                <li><a href="#">Cupons</a></li>
-                <li><a href="#">Supermercado</a></li>
-                <li><a href="#">Moda</a></li>
-                <li><a href="#" class="btn-sell">Vender</a></li>
-                <li><a href="#">Contato</a></li>
-            </ul>
-        </nav>
+    <ul>
+        <li><a href="#">Categorias</a></li> 
+        <li><a href="#">Ofertas</a></li>
+        <li><a href="#">Cupons</a></li>
+        <li><a href="#">Supermercado</a></li>
+        <li><a href="#">Moda</a></li>
+        <li><a href="#" class="btn-sell">Vender</a></li>
+        <li><a href="#">Contato</a></li>
+    </ul>
+</nav>
     </header>
 
     <main class="container">
@@ -67,7 +68,6 @@
     const firebaseConfig = {
         apiKey: "AIzaSyCM8xPGDio2udbf7qJO3j4t-uOE4jCMjLc",
         authDomain: "pegue-facil.firebaseapp.com",
-        // ADICIONE O LINK QUE VOCÊ ME MANDOU AQUI ABAIXO:
         databaseURL: "https://pegue-facil-default-rtdb.firebaseio.com/",
         projectId: "pegue-facil",
         storageBucket: "pegue-facil.firebasestorage.app",
@@ -78,8 +78,6 @@
 
     // Inicializa o Firebase
     firebase.initializeApp(firebaseConfig);
-    
-    // ATENÇÃO: Mudamos de firebase.firestore() para firebase.database()
     const db = firebase.database();
     </script>
 
