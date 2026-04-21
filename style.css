@@ -179,6 +179,7 @@ header {
 
 /* ================= LOCATION OVERLAY (CORRIGIDO) ================= */
 .location-overlay {
+    display: none !important; /* ISSO GARANTE QUE ELE COMEÇA ESCONDIDO */
     position: fixed;
     top: 0;
     left: 0;
@@ -186,11 +187,9 @@ header {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.85);
     z-index: 9999;
-    display: none; /* O JS muda para 'flex' se precisar */
     justify-content: center;
     align-items: center;
 }
-
 .location-modal {
     background-color: var(--white);
     padding: 40px;
