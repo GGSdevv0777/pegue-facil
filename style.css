@@ -178,42 +178,57 @@ header {
 }
 
 /* ================= LOCATION OVERLAY (CORRIGIDO) ================= */
+/* Fundo escuro que bloqueia tudo */
 .location-overlay {
-    display: none !important; /* ISSO GARANTE QUE ELE COMEÇA ESCONDIDO */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.85);
+    background-color: rgba(0, 0, 0, 0.9); /* Quase preto */
     z-index: 9999;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
+
+/* Card Branco e Quadrado */
 .location-modal {
-    background-color: var(--white);
-    padding: 40px;
-    border-radius: 4px;
+    background-color: #FFFFFF;
+    padding: 50px;
     text-align: center;
     max-width: 400px;
     width: 90%;
+    border-radius: 0; /* Totalmente quadrado */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-.btn-location-new {
-    background-color: var(--white);
-    color: var(--primary-green);
-    border: 2px solid var(--primary-green);
+.location-modal h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.location-modal p {
+    margin-bottom: 30px;
+    color: #666;
+    font-size: 14px;
+}
+
+/* Botão Quadrado no Estilo do Site */
+.btn-location-square {
+    background-color: #00A650; /* Verde do seu botão Vender */
+    color: #FFFFFF;
+    border: none;
     padding: 15px;
+    width: 100%;
     font-weight: bold;
     cursor: pointer;
-    width: 100%;
-    border-radius: 0; /* QUADRADO */
-    text-transform: uppercase;
+    border-radius: 0; /* Quadrado */
+    transition: background 0.3s;
 }
 
-.btn-location-new:hover {
-    background-color: var(--primary-green);
-    color: var(--white);
+.btn-location-square:hover {
+    background-color: #008f45;
 }
 
 /* ================= RESPONSIVIDADE ================= */
