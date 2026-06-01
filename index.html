@@ -7,26 +7,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
     <div id="locationOverlay" class="location-overlay">
-    <div class="location-modal">
-        <h3>Localização Necessária</h3>
-        <p>Para mostrar as melhores ofertas perto de você, precisamos que você autorize o acesso no seu navegador.</p>
-        
-        <button class="btn-location-square" onclick="pegarLocalizacao()">
-            PERMITIR LOCALIZAÇÃO
-        </button>
+        <div class="location-modal">
+            <h3>Localização Necessária</h3>
+            <p>Para mostrar as melhores ofertas perto de você, precisamos que você autorize o acesso no seu navegador.</p>
+            <button class="btn-location-square" onclick="pegarLocalizacao()">
+                PERMITIR LOCALIZAÇÃO
+            </button>
+        </div>
     </div>
-</div>
 
     <header>
         <div class="top-bar container">
             <a href="#" class="logo">
                 <img src="https://github.com/GGSdevv0777/pegue-facil/blob/main/logo.png?raw=true" alt="Pegue Fácil Logo" class="logo-img">
             </a>
-            
             <div class="search-container">
                 <input type="text" placeholder="Estou buscando por...">
                 <button type="button">Buscar</button>
@@ -76,7 +73,6 @@
             measurementId: "G-N263N9656Y"
         };
 
-        // Inicializa o Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
     </script>
